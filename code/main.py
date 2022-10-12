@@ -58,8 +58,11 @@ if __name__ == '__main__':
     print(f"Score for alpha = {alpha}: {AccListM[-1]}")
     plot_results(LossListM, AccListM)
 
+'''
+What the FUCK
 else:
     print('What the fuck?')
+'''
 
 
 
