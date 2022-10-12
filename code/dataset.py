@@ -24,8 +24,9 @@ class MyDataset(Dataset):
     def __init__(self, x, y):
 
         device = 'cuda' if th.cuda.is_available() else 'cpu'
-        self.x = th.tensor(x, dtype=th.float, device=device)
-        self.y = th.tensor(y, dtype=th.long, device=device)
+        self.x1, self.y1 = toarray(x, y)
+        self.x = th.tensor(self.x1, dtype=th.float, device=device)
+        self.y = th.tensor(self.y1, dtype=th.long, device=device)
 
     def __len__(self):
         return len(self.x)
