@@ -7,10 +7,12 @@ from Module import FCN
 from trainer import train_mixup_model_epoch
 from plt import plot_results
 
+from dataset_load import load_data
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', type=str, default='gunpoint', required=True ,help='The dataset name')
+    parser.add_argument('--dataset', type=str, default='gunpoint', required=True, help='The dataset name')
     parser.add_argument('--epochs', type=int, default=10, help='Epoch number')
     parser.add_argument('--alpha', type=float, default=1.0, help='The alpha')
     parser.add_argument('--device', type=str, default='cpu' ,help='cpu for CPU and cuda for NVIDIA GPU')
@@ -24,14 +26,16 @@ if __name__ == '__main__':
     device = args.device
     epochs = args.epochs
     alpha = args.alpha
+    filename = args.dataset
 
 
-    if args.dataset == 'gunpoint':
-        x_tr, y_tr = load_gunpoint(split='train', return_X_y=True)
-        x_te, y_te = load_gunpoint(split='test', return_X_y=True)
 
-        training_set = MyDataset(x_tr, y_tr)
-        test_set = MyDataset(x_te, y_te)
+
+    x_tr, y_tr = load_data(filename=filename, typename='train')
+    x_te, y_te = load_data(filename=filename, typename='test')
+
+    training_set = MyDataset(x_tr, y_tr)
+    test_set = MyDataset(x_te, y_te)
 
     '''
     device = 'cpu'
@@ -58,11 +62,8 @@ if __name__ == '__main__':
     print(f"Score for alpha = {alpha}: {AccListM[-1]}")
     plot_results(LossListM, AccListM)
 
-'''
-What the FUCK
 else:
     print('What the fuck?')
-'''
 
 
 
