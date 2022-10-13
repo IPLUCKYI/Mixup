@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 import os
 
-def load_data(filename, typename):
-    path = r'./data/UCRArchive_2018/%s/'%(filename)
+def load_ucr_data(filename, typename):
+    path = r'./data/UCRArchive_2018/%s/'%(filename)  
     for name in os.listdir(path):
         if typename.upper() in name:
             sj = pd.read_csv(path + name, sep='\t', header=None)
