@@ -9,12 +9,13 @@ from trainer import train_mixup_model_epoch
 from plt import plot_results
 from utils import set_global_seed
 from dataset_load import load_ucr_data
+from dataset_load import load_uea_data
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--datasource', type=str, default='ucr', required=True, help='ucr or uea datasets')
-    parser.add_argument('--dataset', type=str, default='gunpoint', required=True, help='The dataset name')
+    parser.add_argument('--datasource', type=str, default='uea', help='ucr or uea datasets')
+    parser.add_argument('--dataset', type=str, default='ERing', help='The dataset name')
     parser.add_argument('--epochs', type=int, default=10, help='Epoch number')
     parser.add_argument('--alpha', type=float, default=1.0, help='The alpha')
     parser.add_argument('--device', type=str, default='cpu' ,help='cpu for CPU and cuda for NVIDIA GPU')
@@ -40,8 +41,11 @@ if __name__ == '__main__':
         training_set = MyDataset(x_tr, y_tr)
         test_set = MyDataset(x_te, y_te)
     elif data_source == 'uea':
-        print('Not supported yet')
-        sys.exit()
+        x_tr, y_tr = load_uea_data(filename=filename, typename='train')
+        x_te, y_te = load_uea_data(filename=filename, typename='test')
+
+        training_set = MyDataset(x_tr, y_tr)
+        test_set = MyDataset(x_te, y_te)
     else:
         print('Please enter our supported data source')
         sys.exit()
